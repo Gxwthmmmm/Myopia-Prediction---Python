@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import gradio as gr
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -84,3 +85,7 @@ with gr.Blocks(title="MYOPIC PREDICTION SYSTEM") as demo:
 
 if __name__ == "__main__":
     demo.launch() 
+=======
+print("Hello worldddd")
+print("hello Gowtham")
+>>>>>>> 36b349cc6e44924b79be1dc9d9dae34ac54ff5f8
