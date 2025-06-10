@@ -113,4 +113,8 @@ with gr.Blocks(title="MYOPIC PREDICTION SYSTEM") as demo:
     )
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     demo.launch() 
+=======
+    demo.launch() 
+>>>>>>> 4397aafa1c223630ac5d4018486b9225bc11f51f
