@@ -1,0 +1,17 @@
+A SAMPLE OUTPUT
+    PATIENT DETAILS:
+    ID:  22
+    Name:  gow
+    Age:  22.0
+    Sex:  Male
+
+    GIVEN DETAILS:
+    Screen Time: 3.0 hours/day
+    Sun Exposure: Yes
+    Parent Vision Rating: 3.0/5
+
+    VISION DETAILS:
+    Vision Rating: 4/5
+    Status: Normal
+    
+    Recommendation: You have good eyesight.Maintain healthy habits!
