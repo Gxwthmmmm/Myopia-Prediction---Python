@@ -1,0 +1,4 @@
+if screen_time > 6 and sun_exposure is "No" and screen_time > 4): then rating is 2
+if screen_time > 4 and sun_exposure is "No" and screen_time > 2): then rating is 3
+if screen_time > 2 and sun_exposure is "No" and screen_time > 1): then rating is 4
+ELSE THE RATING IS 5
