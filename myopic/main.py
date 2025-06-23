@@ -2,9 +2,45 @@ import gradio as gr
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
+import os
+from datetime import datetime
 
 # Initialize a dummy model (optional, not used here)
 model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+# CSV file path
+CSV_FILE = "patient_records.csv"
+
+# Function to save patient record to CSV
+def save_to_csv(patient_id, patient_name, age, sex, screen_time, sun_exposure, sun_time, parent_vision, rating, status):
+    record = {
+        'Patient_ID': patient_id,
+        'Patient_Name': patient_name,
+        'Age': age,
+        'Sex': sex,
+        'Screen_Time': screen_time,
+        'Sun_Exposure': sun_exposure,
+        'Sun_Time': sun_time,
+        'Parent_Vision': parent_vision,
+        'Vision_Rating': rating,
+        'Status': status
+    }
+    
+    df = pd.DataFrame([record])
+    if os.path.exists(CSV_FILE):
+        df.to_csv(CSV_FILE, mode='a', header=False, index=False)
+    else:
+        df.to_csv(CSV_FILE, index=False)
+    
+    return "Record saved successfully!"
+
+# Function to load historical records
+def load_historical_records():
+    if not os.path.exists(CSV_FILE):
+        return "No historical records found."
+    
+    df = pd.read_csv(CSV_FILE)
+    return df.to_string()
 
 # Function to predict myopia rating
 def predict_myopia(patient_id, patient_name, age, sex, screen_time, sun_exposure, sun_time, parent_vision):
@@ -35,6 +71,9 @@ def predict_myopia(patient_id, patient_name, age, sex, screen_time, sun_exposure
     
     # Determine status
     status = "Myopic" if rating <= 3 else "Normal"
+    
+    # Save record to CSV
+    save_to_csv(patient_id, patient_name, age, sex, screen_time, sun_exposure, sun_time, parent_vision, rating, status)
     
     # Recommendation based on vision rating
     if rating == 3:
@@ -90,9 +129,11 @@ with gr.Blocks(title="MYOPIC PREDICTION SYSTEM") as demo:
             with gr.Row():
                 submit_btn = gr.Button("Enter")
                 reset_btn = gr.Button("Reset")
+                history_btn = gr.Button("View History")
                  
         with gr.Column():
             output = gr.Textbox(label="Prediction Results", lines=14)
+            history_output = gr.Textbox(label="Historical Records", lines=10, visible=False)
     
     # Update sun time visibility when sun exposure changes
     sun_exposure.change(
@@ -111,10 +152,11 @@ with gr.Blocks(title="MYOPIC PREDICTION SYSTEM") as demo:
         fn=reset_inputs,
         outputs=[patient_id, patient_name, age, sex, screen_time, sun_exposure, sun_time, parent_vision, output]
     )
+    
+    history_btn.click(
+        fn=load_historical_records,
+        outputs=history_output
+    )
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     demo.launch() 
-=======
-    demo.launch() 
->>>>>>> 4397aafa1c223630ac5d4018486b9225bc11f51f
